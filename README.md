@@ -16,14 +16,17 @@ This version leverages Gurobi to solve a MIP model of the problem instead.
 - $b$ - multiplier for adjacency bonuses.
 - $R_n \subset N, \forall n \in N$ - set of plots that must also be selected if $n$ is selected.
 ### Variables:
-- $x_n = \begin{cases}1 & \text{if plot n is selected,} \\ 0 & \text{otherwise.} \end{cases}, \forall n \in N$ 
-- $y_e = \begin{cases}1 & \text{if both plots in edge e are selected,} \\ 0 & \text{otherwise.} \end{cases}, \forall e\in E$ 
+- $x_n, \forall n\in N$ - 1 if plot $n$ is selected, 0 otherwise.
+- $y_e, \forall e\in E$ - 1 if the plots connected by $e$ are both selected, 0 otherwise.
 ### Objective Function:
 $$ \min \sum_{n\in N} c_n x_n - b\sum_{e\in E}v_e y_y$$
 ### Constraints:
 - $y$ variables must correctly represent the status of their connected units.
+
 $$2 y_e \leq x_n + x_m,\forall e =(n,m)\in E$$
 - Target thresholds must be reached.
+
 $$\sum_{n\in N} r_{nk} x_n \geq T_k, \forall k \in K $$
 - Required units must be selected for a unit to be selected.
-$$x_n \leq \sum_{m\in R_n} x_m , \forall n\in N
+
+$$ \left|R_n\right|x_n \leq \sum_{m\in R_n} x_m , \forall n\in N$$
